@@ -3,14 +3,14 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE Rank2Types #-}
-#if __GLASGOW_HASKELL__ >= 800
+-- #if __GLASGOW_HASKELL__ >= 800
 -- a) THQ works on cross-compilers and unregisterised GHCs
 -- b) may make compilation faster as no dynamic loading is ever needed (not sure about this)
 -- c) removes one hindrance to have code inferred as SafeHaskell safe
-{-# LANGUAGE TemplateHaskellQuotes #-}
-#else
-{-# LANGUAGE TemplateHaskell #-}
-#endif
+-- {-# LANGUAGE TemplateHaskellQuotes #-}
+-- #else
+-- {-# LANGUAGE TemplateHaskell #-}
+-- #endif
 
 -- |
 -- Module:      Data.Aeson.Types.Internal
@@ -100,7 +100,7 @@ import qualified Control.Monad.Fail as Fail
 import qualified Data.HashMap.Strict as H
 import qualified Data.Scientific as S
 import qualified Data.Vector as V
-import qualified Language.Haskell.TH.Syntax as TH
+-- import qualified Language.Haskell.TH.Syntax as TH
 
 #if !MIN_VERSION_unordered_containers(0,2,6)
 import Data.List (sort)
@@ -393,19 +393,19 @@ instance Hashable Value where
     hashWithSalt = hashValue
 
 -- @since 0.11.0.0
-instance TH.Lift Value where
-    lift Null = [| Null |]
-    lift (Bool b) = [| Bool b |]
-    lift (Number n) = [| Number (S.scientific c e) |]
-      where
-        c = S.coefficient n
-        e = S.base10Exponent n
-    lift (String t) = [| String (pack s) |]
-      where s = unpack t
-    lift (Array a) = [| Array (V.fromList a') |]
-      where a' = V.toList a
-    lift (Object o) = [| Object (H.fromList . map (first pack) $ o') |]
-      where o' = map (first unpack) . H.toList $ o
+-- instance TH.Lift Value where
+--     lift Null = [| Null |]
+--     lift (Bool b) = [| Bool b |]
+--     lift (Number n) = [| Number (S.scientific c e) |]
+--       where
+--         c = S.coefficient n
+--         e = S.base10Exponent n
+--     lift (String t) = [| String (pack s) |]
+--       where s = unpack t
+--     lift (Array a) = [| Array (V.fromList a') |]
+--       where a' = V.toList a
+--     lift (Object o) = [| Object (H.fromList . map (first pack) $ o') |]
+--       where o' = map (first unpack) . H.toList $ o
 
 -- | The empty array.
 emptyArray :: Value
