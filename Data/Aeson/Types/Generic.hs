@@ -50,7 +50,7 @@ class IsRecord (f :: * -> *) isRecord | f -> isRecord
 
 instance (IsRecord f isRecord) => IsRecord (f :*: g) isRecord
   where isUnary = const False
-#if MIN_VERSION_base(4,9,0)
+#if MIN_VERSION_base(4,9,0) && !defined (ETA_VERSION)
 instance OVERLAPPING_ IsRecord (M1 S ('MetaSel 'Nothing u ss ds) f) False
 #else
 instance OVERLAPPING_ IsRecord (M1 S NoSelector f) False
